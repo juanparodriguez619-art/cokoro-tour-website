@@ -1,0 +1,12 @@
+.DS_Store
+
+# Raw drop-in photos before cropping/processing — not used by the site itself.
+# The processed versions actually used by the site live in assets/images/.
+media_web/
+
+# Single-file build for the shareable Claude preview link — regenerated on
+# demand, not needed to run or deploy the real site.
+dist_artifact/
+
+# Internal planning document, not for public deployment.
+*.pdf

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tours by Area — CoKoro Tour</title>
+<meta name="description" content="Browse CoKoro Tour's guided tours across the Kansai region — Kobe, Osaka, Kyoto, and Nara. Small-group, guide-led experiences, booked securely via GetYourGuide.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/logo/favicon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/logo/favicon-512.png">
+<link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
+<meta name="theme-color" content="#0c1526">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tours by Area — CoKoro Tour">
+<meta property="og:description" content="Guided tours across Kobe, Osaka, Kyoto, and Nara.">
+<meta property="og:image" content="assets/images/hero-bridge.jpg">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="no-js">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- =====================================================================
+     Header
+     ===================================================================== -->
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a class="brand" href="index.html" aria-label="CoKoro Tour home">
+      <img src="assets/logo/cokoro-mark-128.png" alt="" width="32" height="32">
+      <span class="brand-name">CoKoro</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Primary">
+      <a href="index.html#top">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="tours.html" class="is-active">Tours</a>
+      <a href="index.html#guide">Guide</a>
+      <a href="index.html#reviews">Reviews</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn-primary btn-sm" data-role="booking-link" href="https://www.getyourguide.com/-s781057/" target="_blank" rel="noopener noreferrer">
+        Book now
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================================================================
+       Page intro
+       =================================================================== -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Tours &amp; Highlights</span>
+      <h1>Explore the Kansai Region</h1>
+      <p class="lede" style="margin-inline:auto; max-width:56ch;">Pick an area to see our small-group, guide-led tours. We're based in Kobe and adding more of the Kansai region over time.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       Tours by area
+       =================================================================== -->
+  <section class="section section--alt" aria-labelledby="tours-page-heading">
+    <div class="container">
+      <h2 id="tours-page-heading" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Tours by area</h2>
+
+      <div class="tour-region-tabs" id="tour-region-tabs" role="tablist" aria-label="Filter tours by area">
+        <!-- Rendered from REGIONS in data.js by script.js -->
+      </div>
+
+      <div class="tour-grid" id="tours-page-grid">
+        <!-- Rendered from TOURS in data.js by script.js -->
+      </div>
+      <noscript>
+        <p>Please enable JavaScript to see our current tours, or <a href="index.html#contact">contact us directly</a> for tour details.</p>
+      </noscript>
+    </div>
+  </section>
+
+</main>
+
+<!-- =====================================================================
+     Footer
+     ===================================================================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/logo/cokoro-mark-128.png" alt="" width="36" height="36">
+          <span>CoKoro Tour</span>
+        </div>
+        <p style="max-width: 34ch; color: #b8b2a8; font-size: var(--text-sm);">
+          Small-group, guide-led tours around Kobe, Japan.
+        </p>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="tours.html">Tours</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="mailto:cokorotravel@gmail.com">cokorotravel@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/cokorotour/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="footer-year">2026</span> CoKoro Tour. All rights reserved.</span>
+      <span class="footer-bottom-links">
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cancellation Policy</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     Sticky mobile "Book Now" bar
+     ===================================================================== -->
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta-text">
+    <strong>Ready to explore Kobe?</strong>
+    <span>Book securely on GetYourGuide</span>
+  </div>
+  <a class="btn btn-primary" data-role="booking-link" href="https://www.getyourguide.com/-s781057/" target="_blank" rel="noopener noreferrer">
+    Book Now
+  </a>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

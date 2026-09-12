@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cokoro-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4182"],
+      "port": 4182
+    }
+  ]
+}
