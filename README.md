@@ -1,4 +1,4 @@
-# CoKoro Tours — Website
+# CoKoro Tour — Website
 
 A static, no-build-step landing page (plain HTML/CSS/JS). Open with a local
 server (see below) — no framework or install required. Meant to be reached
