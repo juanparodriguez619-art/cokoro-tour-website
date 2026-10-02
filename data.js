@@ -76,6 +76,23 @@ const TOURS = [
     bookingUrl:
       "https://www.getyourguide.com/kobe-l32593/kobe-nada-sake-district-guided-tour-with-tastings-t1408347/?ranking_uuid=731ce1ec-1bf7-499f-8347-68748fd5ea30",
   },
+  {
+    id: "sake-brewery-sushi-pairing-dinner",
+    name: "Kobe: Sake Brewery Tour with Sushi Pairing Dinner in Osaka",
+    image: "tour-sushi-pairing",
+    region: "kobe",
+    duration: "4 hours",
+    area: "Nada, Kobe → Osaka",
+    groupSize: "Private group",
+    price: "8,000",
+    originalPrice: "10,000",
+    currency: "¥",
+    perPerson: true,
+    description:
+      "Tour the Kiku-Masamune Sake Brewery Museum in Kobe's Nada district and taste a range of Japanese sake, then take the train to Osaka for a sushi dinner expertly paired with sake at a well-known local restaurant — with English-speaking support and interpretation throughout. Guests must be 20+.",
+    // No GetYourGuide link provided yet for this tour — falls back to the
+    // general profile link below until a specific bookingUrl is added here.
+  },
 ];
 
 /**
@@ -138,5 +155,13 @@ const REVIEWS = [
     rating: 5,
     quote:
       "A wonderful experience! Our guide was friendly, attentive, and caring throughout the whole tour. She showed us Kobe in a genuine, enjoyable way, and everything was very well organized. I'd absolutely do it again and recommend it 100%.",
+  },
+  {
+    name: "Alvaro — United States",
+    initials: "A",
+    image: "review-alvaro",
+    rating: 5,
+    quote:
+      "My experience with Juan was wonderful. He's a very kind person and really knows the area well. I enjoyed the tastings on the Kobe tour.",
   },
 ];

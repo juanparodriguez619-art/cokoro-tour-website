@@ -523,6 +523,7 @@ h3 { font-size: var(--text-xl); }
 }
 .tour-price { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; }
 .tour-price small { font-family: var(--font-body); font-weight: 400; font-size: var(--text-xs); color: var(--color-muted); }
+.tour-price-original { font-family: var(--font-body); font-weight: 400; font-size: var(--text-sm); color: var(--color-muted); }
 
 .tour-card-cta {
   display: inline-flex;
@@ -721,61 +722,100 @@ h3 { font-size: var(--text-xl); }
   color: var(--color-red);
 }
 
-/* Scattered "polaroid" photo + review cards, à la scrapbook social proof */
-.polaroid-strip {
-  display: flex;
-  gap: var(--space-6);
-  overflow-x: auto;
-  padding: var(--space-5) var(--space-3) var(--space-7);
-  margin: 0 calc(var(--space-3) * -1);
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
+/* Review cards — clean grid, photo + rating badge + name + excerpt + link */
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
 }
-.polaroid-strip::-webkit-scrollbar { height: 8px; }
-.polaroid-strip::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+@media (min-width: 640px) {
+  .review-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .review-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
 .reviews-empty {
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: center;
   color: var(--color-on-dark-muted);
   font-size: var(--text-base);
   padding: var(--space-6) 0;
 }
 
-.polaroid-card {
-  scroll-snap-align: start;
-  flex: 0 0 15.5rem;
+.review-card {
   background: var(--color-surface);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-3) var(--space-4);
-  box-shadow: var(--shadow-md);
-  transition: transform var(--duration-base) var(--ease-out);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border-top: 3px solid var(--color-red);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
 }
-.polaroid-card:hover { transform: translateY(-6px) rotate(0deg) !important; }
-.polaroid-card:nth-child(5n+1) { transform: rotate(-3deg); }
-.polaroid-card:nth-child(5n+2) { transform: rotate(2deg); }
-.polaroid-card:nth-child(5n+3) { transform: rotate(-1.5deg); }
-.polaroid-card:nth-child(5n+4) { transform: rotate(3deg); }
-.polaroid-card:nth-child(5n+5) { transform: rotate(-2deg); }
+.review-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
 
-.polaroid-card img {
-  width: 100%;
+.review-card-media {
+  position: relative;
   aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--space-3);
+  background: var(--color-surface-alt);
 }
-.review-stars { display: flex; gap: 2px; color: var(--color-gold); margin-bottom: var(--space-2); }
-.review-stars svg { width: 14px; height: 14px; }
-.review-quote { font-size: var(--text-sm); color: var(--color-ink-soft); margin: 0 0 var(--space-3); }
-.review-author strong { display: block; font-size: var(--text-sm); }
+.review-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.review-card-media.is-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+}
+.review-card-media.is-placeholder svg { width: 38%; height: 38%; opacity: 0.35; }
 
-@media (min-width: 1024px) {
-  .polaroid-strip {
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow: visible;
-  }
+.review-rating-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(28, 26, 24, 0.75);
+  color: #fff;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 9px;
+  border-radius: var(--radius-full);
 }
+.review-rating-badge svg { width: 12px; height: 12px; color: var(--color-gold); }
+
+.review-card-body {
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+.review-card-body h3 { margin: 0; font-size: var(--text-base); }
+.review-card-quote {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  margin: 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.review-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-red);
+  text-decoration: none;
+  margin-top: var(--space-2);
+}
+.review-card-link svg { width: 14px; height: 14px; transition: transform var(--duration-fast) var(--ease-standard); }
+.review-card-link:hover svg { transform: translateX(3px); }
 
 /* =========================================================================
    Contact

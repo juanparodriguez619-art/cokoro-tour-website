@@ -34,7 +34,10 @@
   function tourCardHtml(tour) {
     var bookingUrl = tour.bookingUrl || (typeof DEFAULT_BOOKING_URL !== "undefined" ? DEFAULT_BOOKING_URL : "#");
     var priceMarkup = tour.price
-      ? tour.currency + tour.price + (tour.perPerson ? " <small>/ person</small>" : "")
+      ? (tour.originalPrice
+          ? '<s class="tour-price-original">' + tour.currency + tour.originalPrice + "</s> "
+          : "") +
+        tour.currency + tour.price + (tour.perPerson ? " <small>/ person</small>" : "")
       : "<small>" + escapeHtml(tour.priceNote || "See price on GetYourGuide") + "</small>";
 
     var mediaInner =
@@ -147,21 +150,27 @@
       return;
     }
 
+    var profileUrl = typeof DEFAULT_BOOKING_URL !== "undefined" ? DEFAULT_BOOKING_URL : "#";
+
     grid.innerHTML = REVIEWS.map(function (review) {
-      var stars = "";
-      for (var i = 0; i < 5; i++) {
-        stars += i < review.rating ? icon.star : '<span style="opacity:.25">' + icon.star + "</span>";
-      }
-      var media = review.image
+      var photo = review.image
         ? '<picture><source srcset="assets/images/' + review.image + '.webp" type="image/webp">' +
-          '<img loading="lazy" src="assets/images/' + review.image + '.jpg" alt="" width="900" height="900"></picture>'
-        : "";
+          '<img loading="lazy" src="assets/images/' + review.image + '.jpg" alt="" width="720" height="720"></picture>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+      var badge = '<div class="review-rating-badge" aria-label="' + review.rating + ' out of 5 stars">' + icon.star + review.rating.toFixed(1) + "</div>";
+      var mediaWrap =
+        '<div class="review-card-media' + (review.image ? "" : " is-placeholder") + '"' + (review.image ? "" : ' aria-hidden="true"') + ">" +
+        photo + badge +
+        "</div>";
+
       return (
-        '<article class="polaroid-card">' +
-        media +
-        '<div class="review-stars" aria-label="' + review.rating + ' out of 5 stars">' + stars + "</div>" +
-        '<p class="review-quote">“' + escapeHtml(review.quote) + '”</p>' +
-        '<div class="review-author"><strong>' + escapeHtml(review.name) + "</strong></div>" +
+        '<article class="review-card">' +
+        mediaWrap +
+        '<div class="review-card-body">' +
+        "<h3>" + escapeHtml(review.name) + "</h3>" +
+        '<p class="review-card-quote">' + escapeHtml(review.quote) + "</p>" +
+        '<a class="review-card-link" href="' + profileUrl + '" target="_blank" rel="noopener noreferrer">See on GetYourGuide ' + icon.arrow + "</a>" +
+        "</div>" +
         "</article>"
       );
     }).join("");
