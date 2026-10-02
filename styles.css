@@ -767,7 +767,7 @@ h3 { font-size: var(--text-xl); }
   justify-content: center;
   color: var(--color-muted);
 }
-.review-card-media.is-placeholder svg { width: 38%; height: 38%; opacity: 0.35; }
+.review-card-media.is-placeholder > svg { width: 38%; height: 38%; opacity: 0.35; }
 
 .review-rating-badge {
   position: absolute;
