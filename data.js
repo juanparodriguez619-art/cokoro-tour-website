@@ -84,8 +84,7 @@ const TOURS = [
     duration: "4 hours",
     area: "Nada, Kobe → Osaka",
     groupSize: "Private group",
-    price: "8,000",
-    originalPrice: "10,000",
+    price: "10,000",
     currency: "¥",
     perPerson: true,
     description:
