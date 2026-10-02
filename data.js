@@ -151,6 +151,7 @@ const REVIEWS = [
   {
     name: "GetYourGuide Traveler — Japan",
     initials: "GT",
+    image: "review-sake-sign",
     rating: 5,
     quote:
       "A wonderful experience! Our guide was friendly, attentive, and caring throughout the whole tour. She showed us Kobe in a genuine, enjoyable way, and everything was very well organized. I'd absolutely do it again and recommend it 100%.",
