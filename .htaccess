@@ -1,0 +1,10 @@
+# Always re-check page, script, style and video files so site updates show up right away.
+# Images can be cached for a day since they rarely change.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|js|css|mp4)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(jpg|jpeg|webp|png|svg)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+</IfModule>
