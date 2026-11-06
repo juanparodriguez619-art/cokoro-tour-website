@@ -92,6 +92,37 @@ const TOURS = [
     // No GetYourGuide link provided yet for this tour — falls back to the
     // general profile link below until a specific bookingUrl is added here.
   },
+  {
+    id: "osaka-private-walking-tour",
+    name: "Osaka: Customizable Private Walking Tour with a Local Guide",
+    image: "tour-osaka-walking",
+    region: "osaka",
+    duration: "3–6 hours",
+    area: "Osaka Castle, Shinsekai & Dotonbori",
+    groupSize: "Private group",
+    price: "14,000",
+    currency: "¥",
+    perPerson: true,
+    description:
+      "Explore Osaka on a private walking tour built around your interests. A typical route starts at Osaka Castle, rides the subway to Shinsekai for Tsutenkaku and crispy kushikatsu, then finishes in Dotonbori with the Glico sign, street food, and the quiet alleys of Hozenji Yokocho. Your guide helps with public transport; food and entry fees are not included.",
+    // No GetYourGuide link provided yet — falls back to the general profile link.
+  },
+  {
+    id: "osaka-castle-onigiri-tour",
+    name: "Osaka: Castle Tour with Main Tower Entry and Onigiri Tasting",
+    image: "tour-osaka-castle",
+    region: "osaka",
+    duration: "2.5 hours",
+    area: "Osaka Castle",
+    groupSize: "Up to 8",
+    price: null, // price wasn't included in what was provided — add it here
+    priceNote: "See current price on GetYourGuide",
+    currency: "¥",
+    perPerson: true,
+    description:
+      "Walk the grounds of Osaka Castle with a guide to learn about its samurai history and architecture — the main gate, giant stone walls, Hokoku Shrine, and entry to the main tower are all included. Finish with an authentic onigiri tasting at a local shop, Japan's original soul food. Wheelchair accessible.",
+    // No GetYourGuide link provided yet — falls back to the general profile link.
+  },
 ];
 
 /**
