@@ -8,3 +8,6 @@
     Header set Cache-Control "public, max-age=86400"
   </FilesMatch>
 </IfModule>
+
+# Serve every page as UTF-8 so symbols such as the yen sign always display correctly.
+AddDefaultCharset UTF-8

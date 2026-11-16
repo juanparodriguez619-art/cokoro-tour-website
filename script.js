@@ -62,7 +62,7 @@
         if (step.transit) {
           return (
             '<li class="itin-transit"><span>' + escapeHtml(step.transit) +
-            (step.duration ? " · " + escapeHtml(step.duration) : "") + "</span></li>"
+            (step.duration ? " \u00b7 " + escapeHtml(step.duration) : "") + "</span></li>"
           );
         }
         var tags = (step.tags || []).map(function (t) {
@@ -253,7 +253,7 @@
         : '<p class="tours-coming-soon">More tours in this area are on the way. Follow ' +
           '<a href="https://www.instagram.com/cokorotour/" target="_blank" rel="noopener noreferrer">@cokorotour</a> ' +
           "for updates, or " +
-          '<a href="index.html#contact">get in touch</a> and we’ll let you know as soon as they’re live.</p>';
+          '<a href="index.html#contact">get in touch</a> and we\u2019ll let you know as soon as they\u2019re live.</p>';
       bindTourGrid(grid);
 
       Array.prototype.forEach.call(tabs.querySelectorAll("[data-region]"), function (btn) {
