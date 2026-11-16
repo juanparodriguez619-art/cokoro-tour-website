@@ -874,19 +874,24 @@ h3 { font-size: var(--text-xl); }
   animation: review-slide var(--review-slide-duration, 60s) linear infinite;
   will-change: transform;
 }
-.review-marquee:hover .review-track,
-.review-marquee:focus-within .review-track,
+/* Pause on hover only for real mouse devices; on phones a tap would leave the
+   hover/focus state stuck and freeze the slide. */
+@media (hover: hover) and (pointer: fine) {
+  .review-marquee:hover .review-track,
+  .review-marquee:focus-within .review-track { animation-play-state: paused; }
+}
 .review-marquee.is-paused .review-track { animation-play-state: paused; }
 .review-set { display: flex; gap: var(--space-5); padding-right: var(--space-5); }
 @keyframes review-slide {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-/* Reduced motion: no sliding, a plain row people can scroll themselves */
-@media (prefers-reduced-motion: reduce) {
-  .review-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
-  .review-track { animation: none !important; transform: none !important; }
-  .review-set[aria-hidden="true"] { display: none; }
+/* The sliding reviews are a deliberate brand choice, so keep them moving even
+   when a phone has "Reduce motion" turned on (the global rule above would
+   otherwise freeze them). Visitors can still pause by touching the row. */
+.review-track {
+  animation-duration: var(--review-slide-duration, 60s) !important;
+  animation-iteration-count: infinite !important;
 }
 
 .reviews-empty {
