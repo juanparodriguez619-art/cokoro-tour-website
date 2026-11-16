@@ -250,7 +250,7 @@
       var matches = toursIn(regionId);
       grid.innerHTML = matches.length
         ? matches.map(tourCardHtml).join("")
-        : '<p class="tours-coming-soon">More tours in this area are on the way — follow ' +
+        : '<p class="tours-coming-soon">More tours in this area are on the way. Follow ' +
           '<a href="https://www.instagram.com/cokorotour/" target="_blank" rel="noopener noreferrer">@cokorotour</a> ' +
           "for updates, or " +
           '<a href="index.html#contact">get in touch</a> and we’ll let you know as soon as they’re live.</p>';
@@ -334,7 +334,7 @@
 
     if (!REVIEWS.length) {
       grid.innerHTML =
-        '<p class="reviews-empty">Real guest reviews are on their way — add them anytime in <code>data.js</code>.</p>';
+        '<p class="reviews-empty">Real guest reviews are on their way. Add them anytime in <code>data.js</code>.</p>';
       return;
     }
 
@@ -409,7 +409,7 @@
       var href = link.getAttribute("href") || "";
       if (href === "#" || href.trim() === "") {
         e.preventDefault();
-        showToast("Booking link not connected yet — add your GetYourGuide URL in data.js.");
+        showToast("Booking link not connected yet. Add your GetYourGuide URL in data.js.");
       }
     });
   }

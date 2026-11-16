@@ -49,7 +49,7 @@ const TOURS = [
       "Visit the brewery behind Fukuju, the sake served at the Nobel Prize banquet",
       "Use a tasting card and pairing guide to find the sake you like best",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at Hanshin Uozaki Station",
@@ -120,7 +120,7 @@ const TOURS = [
       "Choose Japanese wagyu or fresh local seafood for lunch",
       "Relax with free time for photos, shopping and soaking up the atmosphere",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at Maiko Station",
@@ -349,7 +349,7 @@ const TOURS = [
       "Pairings are all included, with nothing extra to pay at the restaurant",
       "A small group of up to 6, meeting at JR Osaka Station",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at JR Osaka Station",
@@ -411,7 +411,7 @@ const TOURS = [
       "Meal and sake pairing are included, with no extra charges at the restaurant",
       "Taste a variety of sake and learn the history of this traditional drink",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at Uozaki Station",
@@ -478,7 +478,7 @@ const TOURS = [
       "Cross the famous arched bridge and learn its spiritual significance",
       "Enjoy breakfast at a retro café and learn about Japanese morning culture",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at Sumiyoshitaisha Station",
@@ -541,7 +541,7 @@ const TOURS = [
       "Your guide helps you communicate with local shopkeepers",
       "Your guide handles directions, so you can enjoy the trip with peace of mind",
     ],
-    itineraryNote: "A sample itinerary — details can change.",
+    itineraryNote: "A sample itinerary. Details can change.",
     itinerary: [
       {
         title: "Meet at Tennoji Station",
