@@ -22,6 +22,12 @@
       '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.9 6.6 7.1.7-5.4 4.8 1.6 7-6.2-3.8-6.2 3.8 1.6-7-5.4-4.8 7.1-.7L12 2.5Z"/></svg>',
     chevron:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
+    check:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    cross:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>',
+    chat:
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.6A8.5 8.5 0 1 1 21 11.5Z"/></svg>',
   };
 
   function escapeHtml(str) {
@@ -31,8 +37,124 @@
   }
 
   // ---- Tours -------------------------------------------------------
+  function bookingUrlFor(tour) {
+    return tour.bookingUrl || (typeof DEFAULT_BOOKING_URL !== "undefined" ? DEFAULT_BOOKING_URL : "#");
+  }
+
+  function listHtml(items, iconSvg, cls) {
+    return (
+      '<ul class="detail-list ' + (cls || "") + '">' +
+      items.map(function (text) {
+        return "<li>" + (iconSvg || "") + "<span>" + escapeHtml(text) + "</span></li>";
+      }).join("") +
+      "</ul>"
+    );
+  }
+
+  function detailBlock(title, inner) {
+    return '<section class="detail-block"><h4>' + escapeHtml(title) + "</h4>" + inner + "</section>";
+  }
+
+  function itineraryHtml(steps) {
+    return (
+      '<ol class="itinerary">' +
+      steps.map(function (step) {
+        if (step.transit) {
+          return (
+            '<li class="itin-transit"><span>' + escapeHtml(step.transit) +
+            (step.duration ? " · " + escapeHtml(step.duration) : "") + "</span></li>"
+          );
+        }
+        var tags = (step.tags || []).map(function (t) {
+          return '<span class="itin-tag">' + escapeHtml(t) + "</span>";
+        }).join("");
+        return (
+          '<li class="itin-stop">' +
+          '<div class="itin-title"><strong>' + escapeHtml(step.title) + "</strong>" +
+          (step.duration ? '<span class="itin-time">' + escapeHtml(step.duration) + "</span>" : "") + "</div>" +
+          (step.note ? "<p>" + escapeHtml(step.note) + "</p>" : "") +
+          (tags ? '<div class="itin-tags">' + tags + "</div>" : "") +
+          "</li>"
+        );
+      }).join("") +
+      "</ol>"
+    );
+  }
+
+  function tourDetailHtml(tour, bookingUrl) {
+    var out = [];
+
+    out.push(
+      '<div class="tour-meta">' +
+      "<span>" + icon.clock + " " + escapeHtml(tour.duration) + "</span>" +
+      "<span>" + icon.mapPin + " " + escapeHtml(tour.area) + "</span>" +
+      "<span>" + icon.users + " " + escapeHtml(tour.groupSize) + "</span>" +
+      (tour.language ? "<span>" + icon.chat + " " + escapeHtml(tour.language) + "-speaking guide</span>" : "") +
+      "</div>"
+    );
+    out.push('<p class="detail-lede">' + escapeHtml(tour.description) + "</p>");
+    if (tour.freeCancellation) {
+      out.push('<p class="detail-cancel">' + icon.check + " Free cancellation up to 24 hours before the tour</p>");
+    }
+
+    if (tour.highlights && tour.highlights.length) {
+      out.push(detailBlock("Highlights", listHtml(tour.highlights, icon.check)));
+    }
+    if (tour.itinerary && tour.itinerary.length) {
+      out.push(detailBlock(
+        "Itinerary",
+        (tour.itineraryNote ? '<p class="detail-sub">' + escapeHtml(tour.itineraryNote) + "</p>" : "") +
+        itineraryHtml(tour.itinerary)
+      ));
+    }
+    if (tour.options && tour.options.length) {
+      out.push(detailBlock(
+        tour.optionsTitle || "Options",
+        (tour.optionsNote ? '<p class="detail-sub">' + escapeHtml(tour.optionsNote) + "</p>" : "") +
+        '<div class="option-grid">' +
+        tour.options.map(function (o) {
+          return (
+            '<div class="option-card"><strong>' + escapeHtml(o.name) + "</strong>" +
+            '<span class="option-price">' + escapeHtml(o.price) + "</span>" +
+            "<p>" + escapeHtml(o.text) + "</p></div>"
+          );
+        }).join("") +
+        "</div>"
+      ));
+    }
+    var hasInc = tour.includes && tour.includes.length;
+    var hasExc = tour.excludes && tour.excludes.length;
+    if (hasInc || hasExc) {
+      out.push(
+        '<div class="detail-cols">' +
+        (hasInc ? detailBlock("Included", listHtml(tour.includes, icon.check)) : "") +
+        (hasExc ? detailBlock("Not included", listHtml(tour.excludes, icon.cross, "is-excluded")) : "") +
+        "</div>"
+      );
+    }
+    if (tour.meeting) {
+      var mapUrl = "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(tour.meeting.name + " " + (tour.meeting.address || ""));
+      out.push(detailBlock(
+        "Meeting point",
+        '<p class="detail-meeting"><strong>' + escapeHtml(tour.meeting.name) + "</strong><br>" +
+        escapeHtml(tour.meeting.address || "") + "</p>" +
+        '<a class="detail-link" href="' + mapUrl + '" target="_blank" rel="noopener noreferrer">View on map ' + icon.arrow + "</a>"
+      ));
+    }
+    if (tour.notes && tour.notes.length) {
+      out.push(detailBlock("Good to know", listHtml(tour.notes, "", "is-plain")));
+    }
+
+    out.push(
+      '<a class="btn btn-primary detail-book" data-role="booking-link" href="' + bookingUrl +
+      '" target="_blank" rel="noopener noreferrer">Book on GetYourGuide ' + icon.arrow + "</a>"
+    );
+    return out.join("");
+  }
+
   function tourCardHtml(tour) {
-    var bookingUrl = tour.bookingUrl || (typeof DEFAULT_BOOKING_URL !== "undefined" ? DEFAULT_BOOKING_URL : "#");
+    var bookingUrl = bookingUrlFor(tour);
     var priceMarkup = tour.price
       ? (tour.originalPrice
           ? '<s class="tour-price-original">' + tour.currency + tour.originalPrice + "</s> "
@@ -45,31 +167,73 @@
       '<source srcset="assets/images/' + tour.image + '.webp" type="image/webp">' +
       '<img src="assets/images/' + tour.image + '.jpg" loading="lazy" width="1000" height="800" alt="' + escapeHtml(tour.name) + '">' +
       "</picture>";
+    var detailId = "tour-detail-" + tour.id;
 
     return (
-      '<article class="tour-card">' +
+      '<article class="tour-card" data-tour="' + escapeHtml(tour.id) + '">' +
+      '<div class="tour-card-main">' +
       '<div class="tour-card-media">' + mediaInner + "</div>" +
-      '<div class="tour-card-body">' +
-      "<h3>" + escapeHtml(tour.name) + "</h3>" +
-      "<p>" + escapeHtml(tour.description) + "</p>" +
-      '<div class="tour-meta">' +
-      "<span>" + icon.clock + " " + escapeHtml(tour.duration) + "</span>" +
-      "<span>" + icon.mapPin + " " + escapeHtml(tour.area) + "</span>" +
-      "<span>" + icon.users + " " + escapeHtml(tour.groupSize) + "</span>" +
+      '<div class="tour-card-head">' +
+      '<h3 class="tour-card-title"><button type="button" class="tour-card-toggle" aria-expanded="false" aria-controls="' + detailId + '">' +
+      escapeHtml(tour.name) + "</button></h3>" +
+      '<span class="tour-card-hint" aria-hidden="true"><span class="hint-closed">View details</span><span class="hint-open">Hide details</span>' + icon.chevron + "</span>" +
       "</div>" +
       '<div class="tour-card-footer">' +
       '<span class="tour-price">' + priceMarkup + "</span>" +
-      '<a class="tour-card-cta" data-role="booking-link" href="' + bookingUrl + '" target="_blank" rel="noopener noreferrer">Book ' + icon.arrow + "</a>" +
+      '<a class="btn btn-primary btn-sm tour-card-book" data-role="booking-link" href="' + bookingUrl + '" target="_blank" rel="noopener noreferrer">Book</a>' +
       "</div>" +
       "</div>" +
+      '<div class="tour-detail" id="' + detailId + '" hidden>' + tourDetailHtml(tour, bookingUrl) + "</div>" +
       "</article>"
     );
+  }
+
+  // An opened card spans the full row. To avoid holes in the grid it is
+  // moved to the front of its own row (via CSS order), so it opens "in place".
+  function layoutTourGrid(grid) {
+    var cards = Array.prototype.slice.call(grid.querySelectorAll(".tour-card"));
+    var tracks = getComputedStyle(grid).gridTemplateColumns;
+    var cols = tracks && tracks !== "none" ? tracks.split(" ").length : 1;
+    cards.forEach(function (card, i) {
+      card.style.order = card.classList.contains("is-open")
+        ? Math.floor(i / cols) * cols * 2 - 1
+        : i * 2;
+    });
+  }
+
+  function setTourOpen(card, open) {
+    card.classList.toggle("is-open", open);
+    var btn = card.querySelector(".tour-card-toggle");
+    var detail = card.querySelector(".tour-detail");
+    if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (detail) detail.hidden = !open;
+  }
+
+  function bindTourGrid(grid) {
+    if (!grid.__tourBound) {
+      grid.__tourBound = true;
+      grid.addEventListener("click", function (e) {
+        var btn = e.target.closest(".tour-card-toggle");
+        if (!btn) return;
+        var card = btn.closest(".tour-card");
+        var willOpen = !card.classList.contains("is-open");
+        Array.prototype.forEach.call(grid.querySelectorAll(".tour-card.is-open"), function (c) {
+          setTourOpen(c, false);
+        });
+        setTourOpen(card, willOpen);
+        layoutTourGrid(grid);
+        if (willOpen) card.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      window.addEventListener("resize", function () { layoutTourGrid(grid); });
+    }
+    layoutTourGrid(grid);
   }
 
   function renderTours() {
     var grid = document.getElementById("tours-grid");
     if (!grid || typeof TOURS === "undefined") return;
     grid.innerHTML = TOURS.map(tourCardHtml).join("");
+    bindTourGrid(grid);
   }
 
   // ---- Tours by area (tours.html) -----------------------------------
@@ -90,6 +254,7 @@
           '<a href="https://www.instagram.com/cokorotour/" target="_blank" rel="noopener noreferrer">@cokorotour</a> ' +
           "for updates, or " +
           '<a href="index.html#contact">get in touch</a> and we’ll let you know as soon as they’re live.</p>';
+      bindTourGrid(grid);
 
       Array.prototype.forEach.call(tabs.querySelectorAll("[data-region]"), function (btn) {
         var isActive = btn.getAttribute("data-region") === regionId;
@@ -140,6 +305,29 @@
   }
 
   // ---- Reviews -------------------------------------------------------
+  function reviewCardHtml(review, profileUrl) {
+    var photo = review.image
+      ? '<picture><source srcset="assets/images/' + review.image + '.webp" type="image/webp">' +
+        '<img loading="lazy" src="assets/images/' + review.image + '.jpg" alt="" width="720" height="720"></picture>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+    var badge = '<div class="review-rating-badge" aria-label="' + review.rating + ' out of 5 stars">' + icon.star + review.rating.toFixed(1) + "</div>";
+    var mediaWrap =
+      '<div class="review-card-media' + (review.image ? "" : " is-placeholder") + '"' + (review.image ? "" : ' aria-hidden="true"') + ">" +
+      photo + badge +
+      "</div>";
+
+    return (
+      '<article class="review-card">' +
+      mediaWrap +
+      '<div class="review-card-body">' +
+      "<h3>" + escapeHtml(review.name) + "</h3>" +
+      '<p class="review-card-quote">' + escapeHtml(review.quote) + "</p>" +
+      '<a class="review-card-link" href="' + profileUrl + '" target="_blank" rel="noopener noreferrer">See on GetYourGuide ' + icon.arrow + "</a>" +
+      "</div>" +
+      "</article>"
+    );
+  }
+
   function renderReviews() {
     var grid = document.getElementById("reviews-grid");
     if (!grid || typeof REVIEWS === "undefined") return;
@@ -151,29 +339,31 @@
     }
 
     var profileUrl = typeof DEFAULT_BOOKING_URL !== "undefined" ? DEFAULT_BOOKING_URL : "#";
+    var cards = REVIEWS.map(function (r) { return reviewCardHtml(r, profileUrl); }).join("");
 
-    grid.innerHTML = REVIEWS.map(function (review) {
-      var photo = review.image
-        ? '<picture><source srcset="assets/images/' + review.image + '.webp" type="image/webp">' +
-          '<img loading="lazy" src="assets/images/' + review.image + '.jpg" alt="" width="720" height="720"></picture>'
-        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
-      var badge = '<div class="review-rating-badge" aria-label="' + review.rating + ' out of 5 stars">' + icon.star + review.rating.toFixed(1) + "</div>";
-      var mediaWrap =
-        '<div class="review-card-media' + (review.image ? "" : " is-placeholder") + '"' + (review.image ? "" : ' aria-hidden="true"') + ">" +
-        photo + badge +
-        "</div>";
+    // Two identical sets side by side; the track slides left by exactly one set,
+    // then repeats, so the loop never shows a jump.
+    grid.innerHTML =
+      '<div class="review-track">' +
+      '<div class="review-set">' + cards + "</div>" +
+      '<div class="review-set" aria-hidden="true">' + cards + "</div>" +
+      "</div>";
+    Array.prototype.forEach.call(grid.querySelectorAll('.review-set[aria-hidden="true"] a'), function (a) {
+      a.tabIndex = -1;
+    });
 
-      return (
-        '<article class="review-card">' +
-        mediaWrap +
-        '<div class="review-card-body">' +
-        "<h3>" + escapeHtml(review.name) + "</h3>" +
-        '<p class="review-card-quote">' + escapeHtml(review.quote) + "</p>" +
-        '<a class="review-card-link" href="' + profileUrl + '" target="_blank" rel="noopener noreferrer">See on GetYourGuide ' + icon.arrow + "</a>" +
-        "</div>" +
-        "</article>"
-      );
-    }).join("");
+    // Touch screens have no hover: pause while a finger is down, resume shortly after.
+    var resumeTimer;
+    grid.addEventListener("touchstart", function () {
+      clearTimeout(resumeTimer);
+      grid.classList.add("is-paused");
+    }, { passive: true });
+    function resume() {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(function () { grid.classList.remove("is-paused"); }, 2500);
+    }
+    grid.addEventListener("touchend", resume);
+    grid.addEventListener("touchcancel", resume);
   }
 
   // ---- Mobile nav -------------------------------------------------------
